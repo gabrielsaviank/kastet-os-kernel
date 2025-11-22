@@ -6,6 +6,7 @@ SECTIONS
     . = 0x1000;
 
     .text ALIGN(4) : {
+        KEEP(*(.text.kernel_main))
         *(.text*)
     }
 

@@ -10,7 +10,7 @@ bits 16
 
 KERNEL_LOAD_ADDR   equ 0x1000
 KERNEL_LOAD_SEG    equ KERNEL_LOAD_ADDR >> 4
-KERNEL_SECTORS     equ 4
+KERNEL_SECTORS     equ 20
 
 start:
     cli
@@ -76,7 +76,7 @@ enter_protected_mode:
     lgdt [gdt_descriptor]
 
     mov eax, cr0
-    or  eax, 0x1t
+    or  eax, 0x1
     mov cr0, eax
 
     jmp 0x08:protected_mode_entry

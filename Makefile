@@ -11,9 +11,9 @@ $(BUILD)/boot.bin: boot/boot.asm
 	mkdir -p $(BUILD)
 	nasm -f bin boot/boot.asm -o $(BUILD)/boot.bin
 
-$(BUILD)/kernel.o: kernel/kernel.c
+$(BUILD)/kernel.o: kernel/kernel_main.c
 	mkdir -p $(BUILD)
-	$(CC) $(CFLAGS) -c kernel/kernel.c -o $(BUILD)/kernel.o
+	$(CC) $(CFLAGS) -c kernel/kernel_main.c -o $(BUILD)/kernel.o
 
 $(BUILD)/kernel.bin: $(BUILD)/kernel.o kernel/linker.ld
 	$(LD) $(LDFLAGS) -T kernel/linker.ld $(BUILD)/kernel.o -o $(BUILD)/kernel.elf
