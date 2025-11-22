@@ -2,8 +2,8 @@ ENTRY(kernel_main)
 
 SECTIONS
 {
-    /* address that we've defined in the boot(assembly code)*/
-    . = 0x100;
+    /* Load address where the bootloader will place us */
+    . = 0x1000;
 
     .text ALIGN(4) : {
         *(.text*)
