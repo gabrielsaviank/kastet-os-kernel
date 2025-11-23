@@ -1,7 +1,8 @@
 BUILD = build
 
 CC = gcc
-CFLAGS = -m32 -ffreestanding -fno-pic -fno-stack-protector -nostdlib -nostartfiles -nodefaultlibs -Wall -Wextra
+CFLAGS = -m32 -ffreestanding -fno-pic -fno-stack-protector -nostdlib -nostartfiles -nodefaultlibs -Wall -Wextra -g -O0
+
 LD = ld
 LDFLAGS = -m elf_i386
 
@@ -31,3 +32,6 @@ run: all
 
 clean:
 	rm -rf $(BUILD)
+
+run-debug: all
+	qemu-system-i386 -fda $(BUILD)/os-image.bin -S -gdb tcp::1234
