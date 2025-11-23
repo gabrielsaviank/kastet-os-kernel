@@ -11,12 +11,16 @@ $(BUILD)/boot.bin: boot/boot.asm
 	mkdir -p $(BUILD)
 	nasm -f bin boot/boot.asm -o $(BUILD)/boot.bin
 
-$(BUILD)/kernel.o: kernel/kernel.c
+$(BUILD)/kernel.o: kernel/kernel_main.c
 	mkdir -p $(BUILD)
-	$(CC) $(CFLAGS) -c kernel/kernel.c -o $(BUILD)/kernel.o
+	$(CC) $(CFLAGS) -c kernel/kernel_main.c -o $(BUILD)/kernel.o
 
-$(BUILD)/kernel.bin: $(BUILD)/kernel.o kernel/linker.ld
-	$(LD) $(LDFLAGS) -T kernel/linker.ld $(BUILD)/kernel.o -o $(BUILD)/kernel.elf
+$(BUILD)/console.o: kernel/helpers/console.c
+	mkdir -p $(BUILD)
+	$(CC) $(CFLAGS) -c kernel/helpers/console.c -o $(BUILD)/console.o
+
+$(BUILD)/kernel.bin: $(BUILD)/kernel.o $(BUILD)/console.o kernel/linker.ld
+	$(LD) $(LDFLAGS) -T kernel/linker.ld $(BUILD)/kernel.o $(BUILD)/console.o -o $(BUILD)/kernel.elf
 	objcopy -O binary $(BUILD)/kernel.elf $(BUILD)/kernel.bin
 
 $(BUILD)/os-image.bin: $(BUILD)/boot.bin $(BUILD)/kernel.bin
