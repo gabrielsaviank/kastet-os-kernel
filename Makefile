@@ -20,6 +20,14 @@ $(BUILD)/console.o: kernel/helpers/console.c
 	mkdir -p $(BUILD)
 	$(CC) $(CFLAGS) -c kernel/helpers/console.c -o $(BUILD)/console.o
 
+$(BUILD)/interrupts.o: kernel/interrupts.c
+	mkdir -p $(BUILD)
+	$(CC) $(CFLAGS) -c kernel/interrupts.c -o $(BUILD)/interrupts.o
+
+$(BUILD)/isr_stubs.o: kernel/interrupts.asm
+	mkdir -p $(BUILD)
+	nasm -f elf32 kernel/interrupts.asm -o $(BUILD)/isr_stubs.o
+
 $(BUILD)/kernel.bin: $(BUILD)/kernel.o $(BUILD)/console.o kernel/linker.ld
 	$(LD) $(LDFLAGS) -T kernel/linker.ld $(BUILD)/kernel.o $(BUILD)/console.o -o $(BUILD)/kernel.elf
 	objcopy -O binary $(BUILD)/kernel.elf $(BUILD)/kernel.bin
