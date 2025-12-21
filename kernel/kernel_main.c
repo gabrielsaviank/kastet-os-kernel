@@ -17,7 +17,7 @@ void kernel_main(void) {
 
     interrupt_descriptor_table_init();
 
-    // Testing functions
+    // TEEEESST
     console_write("IDT initialised. Triggering int 0...\n");
 
     __asm__ __volatile__("int $0");
