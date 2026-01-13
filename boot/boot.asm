@@ -100,7 +100,6 @@ protected_mode_entry:
     hlt
     jmp .hang32
 
-
 align 8
 gdt_start:
     dq 0
